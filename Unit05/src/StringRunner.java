@@ -13,5 +13,12 @@ public class StringRunner
 {
 	public static void main ( String[] args )
 	{
+		Scanner reader = new Scanner(System.in);
+		out.println("Enter a word:");
+		String str = reader.next();
+		StringOddOrEven s = new StringOddOrEven(str);
+		s.setString(str);
+		s.isEven();
+		s.print();
 	}
 }
