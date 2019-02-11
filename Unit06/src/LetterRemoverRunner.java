@@ -10,7 +10,6 @@ public class LetterRemoverRunner
 	{
 		LetterRemover L = new LetterRemover("I am Sam I am",'a');
 		System.out.println(L.toString());
-		System.out.println(L.removeLetters());
 											
 	}
 }

@@ -31,23 +31,52 @@ public class Magpie2
 	public String getResponse(String statement)
 	{
 		String response = "";
-		if (statement.indexOf("no") >= 0)
-		{
-			response = "Why so negative?";
+		statement = statement.trim();
+		if (statement.length() == 0) {
+			response = "Say something, please.";
+			return response;
 		}
-		else if (statement.indexOf("mother") >= 0
+		else {
+			
+			if (statement.indexOf("mother") >= 0
 				|| statement.indexOf("father") >= 0
 				|| statement.indexOf("sister") >= 0
 				|| statement.indexOf("brother") >= 0)
-		{
+			{
 			response = "Tell me more about your family.";
-		}
-		else
-		{
-			response = getRandomResponse();
-		}
-		return response;
+			}
+			else if (statement.indexOf("dog") >=0 || 
+					statement.indexOf("cat")>= 0) {
+				response = "Tell me more about your pets";
+				
+			}
+			else if (statement.indexOf("mauro") >= 0)
+			{
+				response = "He is so cool";
+			}
+			else if (statement.indexOf("Hi") >= 0 || statement.indexOf("hi") >= 0)
+			{
+				response = "Howdy";
+			}
+			else if (statement.indexOf("who are you") >= 0)
+			{
+				response = "I have no name, I am a robot. But many call me magpie";
+			}
+			else if (statement.indexOf("ben") >= 0)
+			{
+				response = "Yeah I don't like that guy";
+			}
+			else if (statement.indexOf("no") >= 0)
+			{
+				response = "Why so negative?";
+			}
+			else
+			{
+				response = getRandomResponse();
+			}
+			return response;
 	}
+}
 
 	/**
 	 * Pick a default response to use if nothing else fits.
@@ -55,7 +84,7 @@ public class Magpie2
 	 */
 	private String getRandomResponse()
 	{
-		final int NUMBER_OF_RESPONSES = 4;
+		final int NUMBER_OF_RESPONSES = 6;
 		double r = Math.random();
 		int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
 		String response = "";
@@ -76,7 +105,14 @@ public class Magpie2
 		{
 			response = "You don't say.";
 		}
-
+		else if (whichResponse == 4)
+		{
+			response = "Ok that is cool.";
+		}
+		else if (whichResponse == 5)
+		{
+			response = "Wow.";
+		}
 		return response;
 	}
 }
