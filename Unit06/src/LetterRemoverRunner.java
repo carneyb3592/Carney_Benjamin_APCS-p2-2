@@ -8,7 +8,9 @@ public class LetterRemoverRunner
 {
 	public static void main( String args[] )
 	{
-		//add test cases		
+		LetterRemover L = new LetterRemover("I am Sam I am",'a');
+		System.out.println(L.toString());
+		System.out.println(L.removeLetters());
 											
 	}
 }
