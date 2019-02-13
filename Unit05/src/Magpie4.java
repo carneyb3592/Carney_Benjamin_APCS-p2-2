@@ -31,46 +31,64 @@ public class Magpie4
 	public String getResponse(String statement)
 	{
 		String response = "";
-		if (statement.length() == 0)
-		{
+		statement = statement.trim();
+		if (statement.length() == 0) {
 			response = "Say something, please.";
+			return response;
 		}
-
-		else if (findKeyword(statement, "no") >= 0)
-		{
-			response = "Why so negative?";
-		}
-		else if (findKeyword(statement, "mother") >= 0
+		else {
+			
+			if (findKeyword(statement, "mother") >= 0
 				|| findKeyword(statement, "father") >= 0
-				|| findKeyword(statement, "sister") >= 0
-				|| findKeyword(statement, "brother") >= 0)
-		{
-			response = "Tell me more about your family.";
-		}
-
-		// Responses which require transformations
-		else if (findKeyword(statement, "I want to", 0) >= 0)
-		{
-			response = transformIWantToStatement(statement);
-		}
-
-		else
-		{
-			// Look for a two word (you <something> me)
-			// pattern
-			int psn = findKeyword(statement, "you", 0);
-
-			if (psn >= 0
-					&& findKeyword(statement, "me", psn) >= 0)
+				|| findKeyword(statement, "brother") >= 0
+				|| findKeyword(statement, "sister") >= 0)
 			{
+			response = "Tell me more about your family.";
+			}
+			else if (findKeyword(statement, "I want", 0) >= 0) {
+				response = tranformIWantStatement(statement);
+			}
+			else if (findKeyword(statement, "I want to",0) >= 0) {
+				response = transformIWantToStatement(statement);
+			}
+			
+			else if (findKeyword(statement, "I",0) >= 0) {
+				response = transformIYouStatement(statement);
+			}
+			else if (findKeyword(statement, "You",0) >= 0) {
 				response = transformYouMeStatement(statement);
+			}
+			else if (findKeyword(statement, "dog") >=0 || 
+					findKeyword(statement, "cat")>= 0) {
+				response = "Tell me more about your pets";
+				
+			}
+			else if (findKeyword(statement, "mauro") >= 0)
+			{
+				response = "He is so cool";
+			}
+			else if (findKeyword(statement, "Hi") >= 0 || findKeyword(statement,"hi") >= 0)
+			{
+				response = "Howdy";
+			}
+			else if (findKeyword(statement,"who are you") >= 0)
+			{
+				response = "I have no name, I am a robot. But many call me magpie";
+			}
+			else if (findKeyword(statement,"ben") >= 0)
+			{
+				response = "Yeah I don't like that guy";
+			}
+			else if (findKeyword(statement,"no") >= 0)
+			{
+				response = "Why so negative?";
 			}
 			else
 			{
 				response = getRandomResponse();
 			}
+			return response;
 		}
-		return response;
 	}
 	
 	/**
@@ -94,7 +112,22 @@ public class Magpie4
 		String restOfStatement = statement.substring(psn + 9).trim();
 		return "What would it mean to " + restOfStatement + "?";
 	}
-
+	private String tranformIWantStatement(String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		int psn = findKeyword (statement, "I want", 0);
+		String restOfStatement = statement.substring(psn + 6).trim();
+		
+		
+		return "Would you really be happy if you had " + restOfStatement + "?";
+	}
 	
 	
 	/**
@@ -121,7 +154,23 @@ public class Magpie4
 		String restOfStatement = statement.substring(psnOfYou + 3, psnOfMe).trim();
 		return "What makes you think that I " + restOfStatement + " you?";
 	}
-	
+	private String transformIYouStatement(String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement
+				.length() - 1);
+		if (lastChar.equals("."))
+		{
+			statement = statement.substring(0, statement
+					.length() - 1);
+		}
+		
+		int psnOfYou = findKeyword (statement, "you", 0);
+		int psnOfMe = findKeyword (statement, "I", psnOfYou + 1);
+		
+		String restOfStatement = statement.substring(psnOfMe + 3, psnOfYou).trim();
+		return "Why do you " + restOfStatement + " me?";
+	}
 	
 
 	
@@ -191,7 +240,7 @@ public class Magpie4
 	 */
 	private String getRandomResponse()
 	{
-		final int NUMBER_OF_RESPONSES = 4;
+		final int NUMBER_OF_RESPONSES = 6;
 		double r = Math.random();
 		int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
 		String response = "";
@@ -212,7 +261,14 @@ public class Magpie4
 		{
 			response = "You don't say.";
 		}
-
+		else if (whichResponse == 4)
+		{
+			response = "Ok that is cool.";
+		}
+		else if (whichResponse == 5)
+		{
+			response = "Wow.";
+		}
 		return response;
 	}
 
