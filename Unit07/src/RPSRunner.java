@@ -10,19 +10,27 @@ public class RPSRunner
 	public static void main(String args[])
 	{
 		Scanner keyboard = new Scanner(System.in);
-		char response;
-		
-		//add in a do while loop after you get the basics up and running
-		
+		String response = "";
+		while(response != "n") {
 			String player = "";
-		
+			
 			out.print("type in your prompt [R,P,S] :: ");
 			
-			//read in the player value
+			player = keyboard.nextLine();
 		
-			RockPaperScissors game = new RockPaperScissors();		
-	}
+			RockPaperScissors game = new RockPaperScissors();
+			game.setPlayers(player);
+			System.out.print(game.toString());
+			out.print("Do you want to play again? (y/n) \n");
+			response = keyboard.nextLine();
+			if (response.equals("n")){
+				break;
+			}
+		}
+			
+	}	
 }
+
 
 
 

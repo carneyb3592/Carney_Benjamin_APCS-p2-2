@@ -30,12 +30,20 @@ public class StringExplorer
 		String sentence = "Computer Science is the best, the greatest, and the most wonderful subject to study";
 		String occurances = "";
 		int count = 0;
-		for(int i = 0; i <sentence.length()-3;i++) {
-			if(sentence.substring(i,i+3).equals("the")) {
+		for(int i = 0; i <sentence.length();i++) 
+		{
+			int indexOf = sentence.indexOf("the", i);
+			if (indexOf != -1)
+			{
 				count++;
-				occurances = occurances + i + ", ";
 				
+				i = indexOf;
+				occurances = occurances + i + ", ";
 			}
+			
+			
+			
+			
 		}
 		
 		System.out.println("There are " + count + " occurances of the in the string at: " + occurances);
