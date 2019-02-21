@@ -32,20 +32,29 @@ public class TriangleFive
 	}
 	public String Triangle() {
 		String output = "";
-		for(int i = 0; i< amount;i++){
-			for(int p = 0; p< amount;p++){
-				for(int y = 0; y< amount;y++)
-				{
-					output+=letter;
-					
+		int amt = amount;
+		int amt2= amount;
+		for(int y = 0; y< amount;y++){
+			char holder = letter;
+			amt = amount;
+			for(int i = 0; i< amt2;i++){
+				for(int p = 0; p< amt;p++){
+					output+=holder;
 				}
 				output+= ' ';
-				output+= (char)(letter+1);
+				if(holder == 'Z')
+				{
+					holder = 'A';
+				}
+				else
+				{
+					holder = (char)(holder+1);
+				}
+				amt--;
 			}
-			
-		}
-		
-		
+			amt2--;
+		output+= '\n';
+	 }
 		return output;
 	}
 	public String toString()
