@@ -9,5 +9,13 @@ public class DeckTester {
 	 */
 	public static void main(String[] args) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
+		String[] ranks = {"jack", "queen", "king"};
+		String[] suits = {"blue", "red"};
+		int[] pointValues = {11, 12, 13};
+		Deck d = new Deck(ranks, suits, pointValues);
+		System.out.print(d);
+		d.deal();
+		d.deal();
+		System.out.print(d);
 	}
 }

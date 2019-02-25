@@ -11,7 +11,7 @@ public class Deck {
 	/**
 	 * cards contains all the cards in the deck.
 	 */
-	private List<Card> cards;
+	private Card[] cards;
 
 	/**
 	 * size is the number of not-yet-dealt cards.
@@ -31,6 +31,18 @@ public class Deck {
 	 */
 	public Deck(String[] ranks, String[] suits, int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
+		size = ranks.length * suits.length;
+		cards = new Card[size];
+		int index = 0;
+		for(int i = 0; i < suits.length;i++ ){
+			for(int y = 0; y < ranks.length;y++){
+				cards[index] = new Card(ranks[y],suits[i],values[y]);
+				index++;
+			}
+		}
+		size = cards.length;
+		shuffle();
+		
 	}
 
 
@@ -40,6 +52,11 @@ public class Deck {
 	 */
 	public boolean isEmpty() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
+		if (size == 0)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	/**
@@ -48,6 +65,7 @@ public class Deck {
 	 */
 	public int size() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
+		return size;
 	}
 
 	/**
@@ -56,6 +74,7 @@ public class Deck {
 	 */
 	public void shuffle() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
+		
 	}
 
 	/**
@@ -65,6 +84,12 @@ public class Deck {
 	 */
 	public Card deal() {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
+		if(size == 0)
+		{
+			return null;
+		}
+		size--;
+		return cards[size];
 	}
 
 	/**
@@ -76,9 +101,9 @@ public class Deck {
 		String rtn = "size = " + size + "\nUndealt cards: \n";
 
 		for (int k = size - 1; k >= 0; k--) {
-			rtn = rtn + cards.get(k);
+			rtn = rtn + cards[k];
 			if (k != 0) {
-				rtn = rtn + ", ";
+				rtn = rtn + "";
 			}
 			if ((size - k) % 2 == 0) {
 				// Insert carriage returns so entire deck is visible on console.
@@ -87,18 +112,18 @@ public class Deck {
 		}
 
 		rtn = rtn + "\nDealt cards: \n";
-		for (int k = cards.size() - 1; k >= size; k--) {
-			rtn = rtn + cards.get(k);
+		for (int k = cards.length - 1; k >= size; k--) {
+			rtn = rtn + cards[k];
 			if (k != size) {
-				rtn = rtn + ", ";
+				rtn = rtn + "";
 			}
-			if ((k - cards.size()) % 2 == 0) {
+			if ((k - size()) % 2 == 0) {
 				// Insert carriage returns so entire deck is visible on console.
 				rtn = rtn + "\n";
 			}
 		}
 
-		rtn = rtn + "\n";
+		rtn = rtn + "\n" + "-------------------------------\n";
 		return rtn;
 	}
 }
