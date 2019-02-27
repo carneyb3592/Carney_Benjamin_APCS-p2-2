@@ -1,3 +1,7 @@
+package activity3;
+
+import java.util.Random;
+
 /**
  * This class provides a convenient way to test shuffling methods.
  */
@@ -26,7 +30,7 @@ public class Shuffler {
 			values1[i] = i;
 			}
 		for (int j = 1; j <= SHUFFLE_COUNT; j++) {
-			perfectShuffle(values1);
+			values1 = perfectShuffle(values1);
 			System.out.print("  " + j + ":");
 			for (int k = 0; k < values1.length; k++) {
 				System.out.print(" " + values1[k]);
@@ -42,7 +46,7 @@ public class Shuffler {
 			values2[i] = i;
 			}
 		for (int j = 1; j <= SHUFFLE_COUNT; j++) {
-			selectionShuffle(values2);
+			values2 = selectionShuffle(values2);
 			System.out.print("  " + j + ":");
 			for (int k = 0; k < values2.length; k++) {
 				System.out.print(" " + values2[k]);
@@ -59,8 +63,20 @@ public class Shuffler {
 	 * the cards in one half with the cards in the other.
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
-	public static void perfectShuffle(int[] values) {
+	public static int[] perfectShuffle(int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+		int[] shuffled = new int[VALUE_COUNT];
+		int k = 0;
+		for(int i = 0; i < values.length/2;i++) {
+			shuffled[i] = values[k];
+			k += 2;
+		}
+		k = 1;
+		for(int i = values.length/2; i < values.length;i++) {
+			shuffled[i] = values[k];
+			k += 2;
+		}
+		return shuffled;
 	}
 
 	/**
@@ -74,7 +90,17 @@ public class Shuffler {
 	 * searching for an as-yet-unselected card.
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
-	public static void selectionShuffle(int[] values) {
+	public static int[] selectionShuffle(int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+		for(int i = values.length-1; i >= 0;i++) {
+			int random = (int)(Math.random() * (i+1));
+			int temp = values[i];
+			values[i] = values[random];
+			
+		}
+		
+		
+		
+		return values;
 	}
 }
