@@ -1,4 +1,4 @@
-package activity3;
+package activity4;
 
 import java.util.Random;
 
@@ -11,19 +11,19 @@ public class Shuffler {
 	 * The number of consecutive shuffle steps to be performed in each call
 	 * to each sorting procedure.
 	 */
-	private static final int SHUFFLE_COUNT = 4;
+	private static final int SHUFFLE_COUNT = 3;
 
 	/**
 	 * The number of values to shuffle.
 	 */
-	private static final int VALUE_COUNT = 6;
+	private static final int VALUE_COUNT = 4;
 
 	/**
 	 * Tests shuffling methods.
 	 * @param args is not used.
 	 */
 	public static void main(String[] args) {
-		System.out.println("Results of " + SHUFFLE_COUNT +
+		/**System.out.println("Results of " + SHUFFLE_COUNT +
 								 " consecutive perfect shuffles:");
 		int[] values1 = new int[VALUE_COUNT];
 		for (int i = 0; i < values1.length; i++) {
@@ -63,9 +63,10 @@ public class Shuffler {
 	 * the cards in one half with the cards in the other.
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
+	}
 	public static int[] perfectShuffle(int[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
-		int[] shuffled = new int[VALUE_COUNT];
+		int[] shuffled = new int[values.length];
 		int k = 0;
 		for(int i = 0; i < values.length/2;i++) {
 			shuffled[i] = values[k];
@@ -90,12 +91,12 @@ public class Shuffler {
 	 * searching for an as-yet-unselected card.
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
-	public static int[] selectionShuffle(int[] values) {
+	public static Card[] selectionShuffle(Card[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
 		Random rand = new Random();
 		for(int i = values.length-1; i > 0; i--) {
 			int r = rand.nextInt(i);
-			int temp = values[i];
+			Card temp = values[i];
 			values[i] = values[r];
 			values[r] = temp;
 		}
