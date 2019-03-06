@@ -15,6 +15,7 @@ public class Deck {
 	/**
 	 * cards contains all the cards in the deck.
 	 */
+	//private List<Card> cards;
 	private Card[] cards;
 
 	/**
