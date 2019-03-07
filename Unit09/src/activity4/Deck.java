@@ -41,7 +41,7 @@ public class Deck {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
 		size = ranks.length * suits.length;
 		cards = new Card[size];
-		//cards = new List<Card>;
+		//cards = new ArrayList<Card>();
 		int index = 0;
 		for(int i = 0; i < suits.length;i++ ){
 			for(int y = 0; y < ranks.length;y++){
@@ -103,6 +103,7 @@ public class Deck {
 		}
 		size--;
 		return cards[size];
+		//return cards.get(size);
 	}
 
 	/**
@@ -126,9 +127,9 @@ public class Deck {
 		}
 
 		rtn = rtn + "\nDealt cards: \n";
+		//for (int k = cards.size() - 1; k >= size; k--)
 		for (int k = cards.length - 1; k >= size; k--)
 		{
-			//for (int k = cards.size() - 1; k >= size; k--)
 			rtn = rtn + cards[k];
 			//rtn = rtn + cards.get(k);
 			if (k != size) {

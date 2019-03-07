@@ -1,5 +1,6 @@
 package activity4;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -91,6 +92,19 @@ public class Shuffler {
 	 * searching for an as-yet-unselected card.
 	 * @param values is an array of integers simulating cards to be shuffled.
 	 */
+/*	public static List<Card> selectionShuffle(List<Card> values){
+		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
+		/*Random rand = new Random();
+		for(int i = values.size()-1; i > 0; i--) {
+			int r = rand.nextInt(i);
+			Card temp = values.get(i);
+			values.set(i,values.get(r));
+			values.set(r,temp);
+		}
+		
+		return values;
+	}
+	*/
 	public static Card[] selectionShuffle(Card[] values) {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 3 *** */
 		Random rand = new Random();
