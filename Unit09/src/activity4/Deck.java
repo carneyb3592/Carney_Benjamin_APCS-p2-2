@@ -15,7 +15,7 @@ public class Deck {
 	/**
 	 * cards contains all the cards in the deck.
 	 */
-	
+	//private List<Card> cards;
 	private Card[] cards;
 
 	/**
@@ -41,14 +41,17 @@ public class Deck {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 2 *** */
 		size = ranks.length * suits.length;
 		cards = new Card[size];
+		//cards = new List<Card>;
 		int index = 0;
 		for(int i = 0; i < suits.length;i++ ){
 			for(int y = 0; y < ranks.length;y++){
+				//cards.set(index,new Card(ranks[y],suits[i],values[y]));
 				cards[index] = new Card(ranks[y],suits[i],values[y]);
 				index++;
 			}
 		}
 		size = cards.length;
+		//size = cards.size();
 		shuffle();
 		
 	}
@@ -84,6 +87,7 @@ public class Deck {
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 4 *** */
 		cards = Shuffler.selectionShuffle(cards);
 		size = cards.length;
+		//size = cards.size();
 	}
 
 	/**
@@ -111,6 +115,7 @@ public class Deck {
 
 		for (int k = size - 1; k >= 0; k--) {
 			rtn = rtn + cards[k];
+			//rtn = rtn + cards.get(k);
 			if (k != 0) {
 				rtn = rtn + "";
 			}
@@ -121,8 +126,11 @@ public class Deck {
 		}
 
 		rtn = rtn + "\nDealt cards: \n";
-		for (int k = cards.length - 1; k >= size; k--) {
+		for (int k = cards.length - 1; k >= size; k--)
+		{
+			//for (int k = cards.size() - 1; k >= size; k--)
 			rtn = rtn + cards[k];
+			//rtn = rtn + cards.get(k);
 			if (k != size) {
 				rtn = rtn + "";
 			}
