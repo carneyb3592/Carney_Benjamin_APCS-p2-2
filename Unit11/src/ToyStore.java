@@ -3,6 +3,8 @@
 //Name -
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class ToyStore
@@ -32,7 +34,6 @@ public class ToyStore
   
   	public Toy getThatToy( String nm )
   	{
-  		
   		for(Toy i : toyList) {
   			if(i.getName().equals(nm)) {
   				return i;
@@ -41,26 +42,32 @@ public class ToyStore
   		return null;
   	}
   
-  	public String getMostFrequentToy()
+  	public Toy getMostFrequentToy()
   	{
   		int max = toyList.get(0).getCount();
-  		String max2 = toyList.get(0).getName();
+  		Toy max2 = toyList.get(0);
   		for(Toy i : toyList) {
   			if (i.getCount() > max) {
   				max = i.getCount();
-  				max2 = i.getName();
+  				max2 = i;
   			}
   		}
   		return max2;
   	}  
-  
-  	public void sortToysByCount()
-  	{
-  		
+  	
+  	public ArrayList<Toy> sortToysByCount(){
+  		ArrayList<Toy> temp = new ArrayList<Toy>();
+  		int index = 0;
+  		while(toyList.size() > 0) {
+  			temp.add(getMostFrequentToy());
+  			toyList.remove(getMostFrequentToy());
+  			index++;
+  		}
+  		return temp;
   	}  
   	  
 	public String toString()
 	{
-		return toyList.toString() + "\nmax == " + getMostFrequentToy();
+		return toyList.toString() + "\nmax == " + getMostFrequentToy() + "\nSorted by count:" + sortToysByCount();
 	}
 }
