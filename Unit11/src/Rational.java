@@ -11,8 +11,8 @@ class Rational implements Comparable<Rational>
 	private int den;
 	//write two constructors
 	public Rational() {
-		num = 0;
-		den = 0;
+		num = 1;
+		den = 1;
 	}
 	public Rational(int n, int d) {
 		setRational(n,d);
@@ -21,6 +21,7 @@ class Rational implements Comparable<Rational>
 	public void setRational(int numm, int denn) {
 		setNumerator(numm);
 		setDenominator(denn);
+		reduce();
 	}
 	//write  a set method for numerator and denominator
 	public void setNumerator(int n) {
@@ -44,38 +45,69 @@ class Rational implements Comparable<Rational>
 
 	private void reduce()
 	{
-		
+		int gcd = gcd(num,den);
+		num/=gcd;
+		den/=gcd;
 	}
 
 	private int gcd(int numOne, int numTwo)
 	{
-		if()
-
-		return 1;
+		int lower = 0;
+		int gcd = 1;
+		if(numOne > numTwo) {
+			lower = numTwo;
+		}
+		else {
+			lower = numOne;
+		}
+		for(int i = 1; i <= lower; i++) {
+			if(numOne%i == 0 && numTwo%i == 0) {
+				gcd = i;
+			}
+		}
+		return gcd;
 	}
 
 	public Object clone ()
 	{
-		return "";
+		return this;
 	}
 
 
 	//ACCESSORS
 
 	//write get methods for numerator and denominator
-	
-	
+	public int getNumerator() {
+		return num;
+	}
+	public int getDenominator() {
+		return den;
+	}
 	public boolean equals( Object obj)
 	{
-
-
+		if(obj == null) {
+			return false;
+		}
+		if(obj == this) {
+			return true;
+		}
+		if(obj instanceof Rational) {
+			Rational compare = (Rational) obj;
+			return compare.getDenominator() == den && compare.getNumerator() == num;
+		}
 		return false;
 	}
 
 	public int compareTo(Rational other)
 	{
-
-
+		if(equals(other)) {
+			return 0;
+		}
+		int total = num/den;
+		int otherTotal = other.num/other.den;
+		if(otherTotal > total) {
+			return 1;
+		}
 		return -1;
 	}
 
@@ -84,5 +116,7 @@ class Rational implements Comparable<Rational>
 	
 	//write  toString() method
 	
-	
+	public String toString() {
+		return num + "/" + den;
+	}
 }
