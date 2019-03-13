@@ -103,9 +103,9 @@ class Rational implements Comparable<Rational>
 		if(equals(other)) {
 			return 0;
 		}
-		int total = num/den;
-		int otherTotal = other.num/other.den;
-		if(otherTotal > total) {
+		double total = (double)num/den;
+		double otherTotal = (double)other.num/other.den;
+		if(otherTotal < total) {
 			return 1;
 		}
 		return -1;

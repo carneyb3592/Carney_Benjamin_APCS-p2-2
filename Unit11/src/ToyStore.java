@@ -57,11 +57,9 @@ public class ToyStore
   	
   	public ArrayList<Toy> sortToysByCount(){
   		ArrayList<Toy> temp = new ArrayList<Toy>();
-  		int index = 0;
   		while(toyList.size() > 0) {
   			temp.add(getMostFrequentToy());
   			toyList.remove(getMostFrequentToy());
-  			index++;
   		}
   		return temp;
   	}  
