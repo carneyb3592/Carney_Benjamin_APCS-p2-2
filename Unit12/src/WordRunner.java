@@ -12,10 +12,14 @@ public class WordRunner
 {
 	public static void main( String args[] ) throws IOException
 	{
-		Scanner file = new Scanner(new File("words.dat"));
-
+		Scanner file = new Scanner(new File("src/words.dat"));
 		int size = file.nextInt();
-		file.nextLine();
+		String word = "";
+		while(file.hasNext()){
+			word += file.next() + " ";
+		}
+		Word w = new Word(word);
+		w.toString();
 		
 
 
