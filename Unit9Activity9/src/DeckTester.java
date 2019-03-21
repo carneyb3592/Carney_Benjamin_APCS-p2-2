@@ -1,4 +1,3 @@
-package activity4;
 
 /**
  * This is a class that tests the Deck class.
