@@ -53,7 +53,8 @@ public class ElevensBoard extends Board {
 	 */
 	@Override
 	public boolean isLegal(List<Integer> selectedCards) {
-		return (containsPairSum11(selectedCards) || containsJQK(selectedCards));
+		
+		return containsPairSum11(selectedCards) || containsJQK(selectedCards);
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
 	}
 
@@ -70,7 +71,7 @@ public class ElevensBoard extends Board {
 		int size = size();
 		ArrayList<Integer> cards = new ArrayList<Integer>();
 		for(int i = 0; i < size; i++) {
-			cards.add(cardAt(i).pointValue());
+			cards.add(i);
 		}
 		
 		return containsPairSum11(cards) || containsJQK(cards);
@@ -86,9 +87,14 @@ public class ElevensBoard extends Board {
 	 *              contain an 11-pair; false otherwise.
 	 */
 	private boolean containsPairSum11(List<Integer> selectedCards) {
+		ArrayList<Integer> cards = new ArrayList<Integer>();
+		for(int i = 0; i < selectedCards.size(); i++) {
+			cards.add(cardAt(selectedCards.get(i)).pointValue());
+		}
 		for(int i = 0; i < selectedCards.size(); i++) {
 			for(int j = 0; j < selectedCards.size(); j++) {
-				if(selectedCards.get(i) + selectedCards.get(j) == 11) {
+				//System.out.println(selectedCards.get(i) + " " + selectedCards.get(j));
+				if(cards.get(i) + cards.get(j) == 11) {
 					return true;
 				}
 			}
@@ -106,14 +112,22 @@ public class ElevensBoard extends Board {
 	 *              include a jack, a queen, and a king; false otherwise.
 	 */
 	private boolean containsJQK(List<Integer> selectedCards) {
-		for(int i = 0; i < selectedCards.size(); i++) {
-			for(int j = 0; j < selectedCards.size(); j++) {
-				for(int y = 0; y < selectedCards.size(); y++) {
-					if(selectedCards.get(i) + selectedCards.get(j) +selectedCards.get(y) == 0) {
-						return true;
-					}
-				}
+		boolean j = false;
+		boolean q = false;
+		boolean k = false;
+		for(int i: selectedCards) {
+			if(cardAt(i).rank() == "jack") {
+				j = true;
 			}
+			if(cardAt(i).rank() == "queen") {
+				q = true;
+			}
+			if(cardAt(i).rank() == "king") {
+				k = true;
+			}
+		}
+		if( q && j && k) {
+			return true;
 		}
 		return false;
 		/* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
