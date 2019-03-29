@@ -16,19 +16,26 @@ public class NumberShifter
 		for(int i = 0; i < size; i++) {
 			arr[i] = (int) (Math.random()*10);
 		}
-		
 		return arr;
 	}
 	public static void shiftEm(int[] array)
 	{
-		int[] temp = new int[array.length];
-		int index = 0;
-		int count = 0;
-		for(int y = 0; y < array.length; y++) {
-			if(array[y] == 7) {
-				temp[index] = 7;
-				index++;
+		for (int i = 0; i < array.length; i++) {
+			int j = i;
+			while (j < array.length && array[j] != 7) j++;
+			if (j != i && j < array.length) {
+				int t = array[j];
+				array[j] = array[i];
+				array[i] = t;
 			}
+		}
+	}
+	public String toString() {
+		int[] x = makeLucky7Array(10);
+		String output = Arrays.toString(x) + "\n";
+		shiftEm(x);
+		output += Arrays.toString(x) + "\n";
+		return output;
 		
 	}
 }
