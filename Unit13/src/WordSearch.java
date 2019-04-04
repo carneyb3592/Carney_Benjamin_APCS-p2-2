@@ -11,10 +11,24 @@ public class WordSearch
 
     public WordSearch( int size, String str )
     {
+    	int index = 1;
+    	int row=0;
+    	int col=0;
+    	m = new String[size][size];
+    	for(String[] i : m) {
+    		for(String y : i) {
+    			m[row][col] = str.substring(index-1,index);
+    			index++;
+    			col++;
+    		}
+    		col = 0;
+    		row++;
+    	}
     }
 
     public boolean isFound( String word )
     {
+    	if(checkRight(word,))
     	return false;
     }
 
@@ -60,6 +74,14 @@ public class WordSearch
 
     public String toString()
     {
- 		return "";
+    	String output = "";
+    	for(String[] i : m) {
+    		for(String y : i) {
+    			output += y + " ";
+    		}
+    		output += "\n";
+    	}
+    	
+ 		return output;
     }
 }

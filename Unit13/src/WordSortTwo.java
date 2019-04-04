@@ -10,31 +10,24 @@ public class WordSortTwo
 {
 	private String[] wordRay;
 
+
 	public WordSortTwo(String sentence)
 	{
-		Scanner scan = new Scanner(sentence);
-		Scanner scan2 = new Scanner(sentence);
-		int index = 0;
-		int count = 0;
-		while(scan.hasNext()) {
-			count++;
-		}
-		wordRay = new String[count];
-		while(scan2.hasNext()) {
-			wordRay[index] = scan.nextLine();
-			index++;
-		}
+		wordRay = sentence.split(" ");
 	}
 
 	public void sort()
 	{
-		
-		
+		Arrays.sort(wordRay);
 	}
 
 	public String toString()
 	{
-		String output = wordRay.toString();
+		String output="";
+		sort();
+		for(String i : wordRay){
+			output+= i +"\n";
+		}
 		return output+"\n\n";
 	}
 }
