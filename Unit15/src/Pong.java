@@ -53,11 +53,8 @@ public class Pong extends Canvas implements KeyListener, Runnable
 		keys = new boolean[4];
 		ball.setColor(Color.red);
    
-		setBackground(Color.WHITE);
-		setVisible(true);
+	
 		
-		new Thread(this).start();
-		addKeyListener(this);
 		
 		
    }
@@ -90,16 +87,16 @@ public class Pong extends Canvas implements KeyListener, Runnable
 				rightScore+=1;
 				ball.setXSpeed(0);
 				ball.setYSpeed(0);
-				restart();
+				
 			}
 			if(ball.getX() >= 780) {
 				leftScore+=1;
 				ball.setXSpeed(0);
 				ball.setYSpeed(0);
-				restart();
+				
 			}
-			
 			restart();
+			
 		}
 		//see if the ball hits the top or bottom wall 
 		if(!(ball.getY()>=10 && ball.getY()<= 550)){
