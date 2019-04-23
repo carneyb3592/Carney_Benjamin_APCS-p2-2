@@ -242,15 +242,56 @@ public class Picture extends SimplePicture
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
       {
-        
+        count++;
         leftPixel = pixels[row][col];      
         rightPixel = pixels[row]                       
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
       }
     }
+    System.out.println(count);
   }
-  
+  public void mirrorArms() {
+	  int mirrorPoint = 194;
+	    Pixel leftPixel = null;
+	    Pixel rightPixel = null;
+	    Pixel[][] pixels = this.getPixels2D();
+	    
+	    // loop through the rows
+	    for (int row = 163; row < mirrorPoint; row++)
+	    {
+	      
+	      for (int col = 103; col < 291; col++)
+	      {
+	        leftPixel = pixels[row][col];      
+	        rightPixel = pixels[mirrorPoint-row+mirrorPoint]                 
+	                         [col];
+	        rightPixel.setColor(leftPixel.getColor());
+	      }
+	    }
+  }
+public void mirrorGull() {
+	 int mirrorPoint = 342;
+	    Pixel leftPixel = null;
+	    Pixel rightPixel = null;
+	
+	    Pixel[][] pixels = this.getPixels2D();
+	    
+	    // loop through the rows
+	    for (int row = 234; row < 321; row++)
+	    {
+	      // loop from 13 to just before the mirror point
+	      for (int col = 239; col < mirrorPoint; col++)
+	      {
+	       
+	    	  leftPixel = pixels[row][col];      
+	          rightPixel = pixels[row]                       
+	                           [mirrorPoint - col + mirrorPoint];
+	        rightPixel.setColor(leftPixel.getColor());
+	      }
+	    }
+
+	  }
   /** copy from the passed fromPic to the
     * specified startRow and startCol in the
     * current picture
@@ -332,10 +373,10 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
-    beach.explore();
-    beach.mirrorDiagonal();
-    beach.explore();
+	  Picture snow = new Picture("seagull.jpg");
+	  snow.explore();
+	    snow.mirrorGull();
+	    snow.explore();
   }
   
 } // this } is the end of class Picture, put all new methods before this
