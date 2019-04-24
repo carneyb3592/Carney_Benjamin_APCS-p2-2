@@ -109,6 +109,29 @@ public class PictureTester
 	    snow.mirrorGull();
 	    snow.explore();
   }
+  public static void testCopy() {
+	  Picture flower = new Picture("flower1.jpg");
+      flower.explore();
+      flower.copy(flower, 0, 10, 0, 10);
+      flower.explore();
+  }
+  public static void testMyCollage() {
+	  	Picture canvas = new Picture("640x480.jpg");
+	    canvas.myCollage();
+	    canvas.explore();
+  }
+  public static void testKeepOnlyRed() {
+	  Picture beach = new Picture("beach.jpg");
+	  	beach.explore();
+	    beach.keepOnlyRed();
+	    beach.explore();
+  }
+  public static void testKeepOnlyGreen() {
+	  Picture beach = new Picture("beach.jpg");
+	  	beach.explore();
+	    beach.keepOnlyGreen();
+	    beach.explore();
+  }
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -118,8 +141,8 @@ public class PictureTester
     // to run
     //testZeroBlue();
    // testKeepOnlyBlue();
-    //testKeepOnlyRed();
-    //testKeepOnlyGreen();
+   // testKeepOnlyRed();
+   // testKeepOnlyGreen();
     //testNegate();
     //testGrayscale();
     //testFixUnderwater();
@@ -130,9 +153,10 @@ public class PictureTester
   // testMirrorHorizontal();
    // testMirrorTemple();
     //testMirrorArms();
-    testMirrorGull();
+    //testMirrorGull();
     //testMirrorDiagonal();
     //testCollage();
+   // testMyCollage();
     //testCopy();
     //testEdgeDetection();
     //testEdgeDetection2();

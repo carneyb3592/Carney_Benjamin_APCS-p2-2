@@ -108,6 +108,28 @@ public class Picture extends SimplePicture
 	      }
 	    }
   }
+  public void keepOnlyRed() {
+	  Pixel[][] pixels = this.getPixels2D();
+	    for (Pixel[] rowArray : pixels)
+	    {
+	      for (Pixel pixelObj : rowArray)
+	      {
+	        pixelObj.setBlue(0);
+	        pixelObj.setGreen(0);
+	      }
+	    }
+  }
+  public void keepOnlyGreen() {
+	  Pixel[][] pixels = this.getPixels2D();
+	    for (Pixel[] rowArray : pixels)
+	    {
+	      for (Pixel pixelObj : rowArray)
+	      {
+	        pixelObj.setRed(0);
+	        pixelObj.setBlue(0);
+	      }
+	    }
+  }
   public void negate() {
 	  Pixel[][] pixels = this.getPixels2D();
 	    for (Pixel[] rowArray : pixels)
@@ -322,7 +344,29 @@ public void mirrorGull() {
       }
     }   
   }
-
+  public void copy(Picture fromPic, int startRow, int endRow, int startCol, int endCol)
+  {
+    Pixel fromPixel = null;
+    Pixel toPixel = null;
+    Pixel[][] toPixels = this.getPixels2D();
+    Pixel[][] fromPixels = fromPic.getPixels2D();
+    for (int fromRow = 0, toRow = startRow; 
+         fromRow < fromPixels.length &&
+         toRow < endRow;
+         fromRow++, toRow++)
+    {
+	      for (int fromCol = 0, toCol = startCol; 
+	           fromCol < fromPixels[0].length &&
+	           toCol < endCol;  
+	           fromCol++, toCol++)
+	      {
+	        fromPixel = fromPixels[fromRow][fromCol];
+	        toPixel = toPixels[toRow][toCol];
+	        toPixel.setColor(fromPixel.getColor());
+	       
+	      }
+    } 
+  }
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
@@ -339,7 +383,21 @@ public void mirrorGull() {
     this.mirrorVertical();
     this.write("collage.jpg");
   }
-  
+  public void myCollage() {
+	   Picture flower1 = new Picture("flower1.jpg");
+	   flower1.mirrorHorizontalBotToTop();
+	    Picture flower2 = new Picture("flower2.jpg");
+	    flower2.negate();
+	    this.copy(flower1,0,0);
+	    this.copy(flower2,100,0);
+	    this.copy(flower1,200,0);
+	    Picture flowerNoBlue = new Picture(flower2);
+	    flowerNoBlue.zeroBlue();
+	    this.copy(flowerNoBlue,300,0);
+	    this.copy(flower1,400,0);
+	    this.copy(flower2,500,0);
+	    this.mirrorVertical();
+  }
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
@@ -348,19 +406,24 @@ public void mirrorGull() {
   {
     Pixel leftPixel = null;
     Pixel rightPixel = null;
+    Pixel topPixel = null;
+   
     Pixel[][] pixels = this.getPixels2D();
     Color rightColor = null;
-    for (int row = 0; row < pixels.length; row++)
+    Color topColor = null;
+    for (int row = 0; row < pixels.length-1; row++)
     {
-      for (int col = 0; 
-           col < pixels[0].length-1; col++)
+      for (int col = 0; col < pixels[0].length-1; col++)
       {
         leftPixel = pixels[row][col];
         rightPixel = pixels[row][col+1];
+        topPixel = pixels[row+1][col];
+        topColor = topPixel.getColor();
         rightColor = rightPixel.getColor();
-        if (leftPixel.colorDistance(rightColor) > 
-            edgeDist)
+        if (leftPixel.colorDistance(rightColor) > edgeDist)
           leftPixel.setColor(Color.BLACK);
+        else if(leftPixel.colorDistance(topColor) > edgeDist)
+        	leftPixel.setColor(Color.BLACK);
         else
           leftPixel.setColor(Color.WHITE);
       }
