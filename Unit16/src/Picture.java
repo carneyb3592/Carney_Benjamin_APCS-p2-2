@@ -386,7 +386,7 @@ public void mirrorGull() {
   public void myCollage() {
 	   Picture flower1 = new Picture("flower1.jpg");
 	   flower1.mirrorHorizontalBotToTop();
-	    Picture flower2 = new Picture("flower2.jpg");
+	   Picture flower2 = new Picture("flower2.jpg");
 	    flower2.negate();
 	    this.copy(flower1,0,0);
 	    this.copy(flower2,100,0);
