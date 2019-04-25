@@ -360,8 +360,8 @@ public void mirrorGull() {
 	           toCol < endCol;  
 	           fromCol++, toCol++)
 	      {
-	        fromPixel = fromPixels[fromRow][fromCol];
-	        toPixel = toPixels[toRow][toCol];
+	        fromPixel = fromPixels[toRow][toCol];
+	        toPixel = toPixels[fromRow][fromCol];
 	        toPixel.setColor(fromPixel.getColor());
 	       
 	      }

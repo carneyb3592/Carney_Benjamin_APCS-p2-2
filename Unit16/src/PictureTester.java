@@ -110,10 +110,11 @@ public class PictureTester
 	    snow.explore();
   }
   public static void testCopy() {
-	  Picture flower = new Picture("flower1.jpg");
+	  Picture flower2 = new Picture("640x480.jpg");
+	  Picture flower = new Picture("beach.jpg");
       flower.explore();
-      flower.copy(flower, 0, 10, 0, 10);
-      flower.explore();
+      flower2.copy(flower, 300, 350, 300, 350);
+      flower2.explore();
   }
   public static void testMyCollage() {
 	  	Picture canvas = new Picture("640x480.jpg");
@@ -157,7 +158,7 @@ public class PictureTester
     //testMirrorDiagonal();
     //testCollage();
    // testMyCollage();
-    //testCopy();
+    testCopy();
     //testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
