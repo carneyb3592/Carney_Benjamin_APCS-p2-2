@@ -86,6 +86,31 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 			}
 			
 		}
+		//see if the paddle hits the top or bottom wall 
+		if(!(leftPaddle.getY()>=0 && leftPaddle.getY()<= 560 - leftPaddle.getHeight())){
+			if(leftPaddle.getY() <=0) {
+				leftPaddle.setY(0);
+			}
+			if(leftPaddle.getY() >=560-leftPaddle.getHeight()) {
+				leftPaddle.setY(560-leftPaddle.getHeight());
+			}
+			//restart();
+			
+		}
+		//see if the paddle hits left or right wall
+		if(!(leftPaddle.getX()>=0 && leftPaddle.getX()<=780-leftPaddle.getWidth())){
+			if(leftPaddle.getX()<= 0) {
+				
+				leftPaddle.setX(0);
+			}
+			if(leftPaddle.getX() >= 780-leftPaddle.getWidth()) {
+				leftPaddle.setX(780-leftPaddle.getWidth());
+				
+				
+			}
+			
+		}
+		leftPaddle.setSpeed(speed);
 		//see if the ball hits the top or bottom wall 
 		if(!(ball.getY()>=10 && ball.getY()<= 550)){
 			ball.setYSpeed(-ball.getYSpeed());
@@ -93,46 +118,42 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 			
 		}
 	//see if the ball hits the right side
-		if(ball.getX() == leftPaddle.getX() + leftPaddle.getWidth() && 
-				((leftPaddle.getY() <= ball.getY()) && 
-				(ball.getY() <= leftPaddle.getY() 
-				+ leftPaddle.getHeight())))
+		if((ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()) && (ball.getX() > leftPaddle.getX()) && (ball.getY() >= leftPaddle.getY()) && (ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()))
 		{
-			ball.setX(ball.getX() + ball.getWidth());
-			ball.setXSpeed(-ball.getXSpeed());
+			if(ball.getXSpeed() < 0) {
+				ball.setXSpeed(-ball.getXSpeed());
+			}
+			else {
+				ball.setX(ball.getX() + ball.getWidth());
+			}
 		}
 		//see if the ball hits the left side
-		if (ball.getX() + ball.getWidth()== leftPaddle.getX()  && 
-				((leftPaddle.getY() <= ball.getY()) && 
-						(ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight())))
+		if ((ball.getX()+ ball.getWidth() >= leftPaddle.getX()) && (ball.getX() < leftPaddle.getX() + leftPaddle.getWidth()) && (ball.getY() >= leftPaddle.getY()) && (ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()))
 	        {
-			ball.setX(ball.getX() - ball.getWidth());	
-			ball.setXSpeed(-ball.getXSpeed());
-	        	/**System.out.println(true);
-	        	System.out.println(leftPaddle.getX() - leftPaddle.getWidth() );
-	        	System.out.println(leftPaddle.getX());
-	        	System.out.println(ball.getX());*/
-	        	
+			if(ball.getXSpeed() > 0) {
+				ball.setXSpeed(-ball.getXSpeed());
+
+			}
+			else {
+				ball.setX(ball.getX() - ball.getWidth());
+
+			}
+			
 	        }
-		//see if ball hits bottom
-		if(ball.getY() == leftPaddle.getY() + leftPaddle.getHeight() && 
-				((leftPaddle.getX() <= ball.getX()) && 
-				(ball.getX() <= leftPaddle.getX() 
-				+ leftPaddle.getWidth())))
+		//see if ball hits bottom of paddle
+		if((ball.getY()+ ball.getHeight() >= leftPaddle.getY()) && (ball.getY() < leftPaddle.getY() + leftPaddle.getHeight()) && (ball.getX() >= leftPaddle.getX()) && (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()))
 		{
-			ball.setY(ball.getY() + ball.getHeight());
-			ball.setYSpeed(-ball.getYSpeed());
+				
+				ball.setYSpeed(-ball.getYSpeed());
+				ball.setY(ball.getY() - ball.getHeight());	
 		}
 		//see if ball hits top
-		if ((ball.getY()  + ball.getHeight() == leftPaddle.getY()) && 
-				((leftPaddle.getX() <= ball.getX()) && 
-						(ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth())))
+		if ((ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()) && (ball.getY() > leftPaddle.getY()) && (ball.getX() >= leftPaddle.getX()) && (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()))
 	        {
-	        	ball.setY(ball.getY() - ball.getHeight());	
 				ball.setYSpeed(-ball.getYSpeed());
-	        	//System.out.println(true);
-
+				ball.setY(leftPaddle.getY() + leftPaddle.getHeight() + ball.getHeight() + 5);	
 	        }
+		
 		//see if the paddles need to be moved
 		if(keys[0] == true)
 		{
