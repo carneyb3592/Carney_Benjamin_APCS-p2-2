@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.awt.event.ActionListener;
 
 public class Breakout extends Canvas implements KeyListener, Runnable
@@ -21,10 +22,52 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 	private int speed = 2;
 	private int counter = 0;
 	private int prevPaddlePos;
+	private int brickX = 3;
+	private int brickY = 2;
+	private int spacing= 6;
+	private ArrayList<Brick> brickList;
 	public Breakout()
 	{
+		brickList = new ArrayList<Brick>();
+		for(int i = 0; i < 17; i++) {
+			for(int y = 0; y < 2; y++) {
+				brickList.add(new Brick(brickX,brickY,40,20,Color.GRAY,1));
+				brickY += 20+spacing;
+			}
+			brickX += 40+spacing;
+			brickY=2;
+		}
+		brickX = 3;
+		brickY = 515;
+		for(int i = 0; i < 17; i++) {
+			for(int y = 0; y < 2; y++) {
+				brickList.add(new Brick(brickX,brickY,40,20,Color.GRAY,1));
+				brickY += 20 + spacing;
+			}
+			brickX +=  40+spacing;
+			brickY=515;
+		}
+		brickX=3;
+		brickY=52;
+		for(int i =0; i < 18; i++) {
+			for(int y = 0; y < 2; y++) {
+				brickList.add(new Brick(brickX,brickY,40,20,Color.GRAY,1));
+				brickX+= 40+spacing;
+			}
+			brickY+=20 + spacing;
+			brickX=3;
+		}
+		brickX=692;
+		brickY=52;
+		for(int i =0; i < 18; i++) {
+			for(int y = 0; y < 2; y++) {
+				brickList.add(new Brick(brickX,brickY,40,20,Color.GRAY,1));
+				brickX+= 40+spacing;
+			}
+			brickY+=20 + spacing;
+			brickX=692;
+		}
 		//set up all variables related to the game
-		brick = new Brick(0,0,50,50,Color.GREEN,1);
 		ball = new Ball(200,200,10,10,-1,-1);
 		leftPaddle = new Paddle(0,0,40,40,Color.black,speed);
 		keys = new boolean[4];
@@ -42,7 +85,7 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 	  
    }
    public void restart() {
-	   brick = new Brick(0,0,50,50,Color.GREEN,1);
+	   brick = new Brick(0,0,40,20,Color.GREEN,1);
 	   ball = new Ball(200,200,10,10,-1,-1);
 		leftPaddle = new Paddle(0,0,40,40,Color.black,speed);
 	   keys = new boolean[4];
@@ -56,7 +99,7 @@ public class Breakout extends Canvas implements KeyListener, Runnable
    public void paint(Graphics window)
    {
 	   
-
+	   
 		//set up the double buffering to make the game animation nice and smooth
 		Graphics2D twoDGraph = (Graphics2D)window;
 		 back = (BufferedImage)(createImage(getWidth(),getHeight()));
@@ -68,8 +111,9 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 		//create a graphics reference to the back ground image
 		//we will draw all changes on the background image
 		Graphics graphToBack = back.createGraphics();
-
-		graphToBack.drawString("Left Score: " + leftScore, 10, 10);
+		for(Brick i : brickList) {
+			i.draw(graphToBack);
+		}
 		ball.moveAndDraw(graphToBack);
 		leftPaddle.draw(graphToBack);
 
@@ -86,25 +130,39 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 			}
 			
 		}
-		//see if the paddle hits the top or bottom wall 
-		if(!(leftPaddle.getY()>=0 && leftPaddle.getY()<= 560 - leftPaddle.getHeight())){
-			if(leftPaddle.getY() <=0) {
-				leftPaddle.setY(0);
+		for(Brick brick : brickList) {
+			if(((ball.getX() + ball.getWidth() >= brick.getX()) && (ball.getX() <= brick.getX() + brick.getWidth())) && 
+					((ball.getY() + ball.getHeight() >= brick.getY() && (ball.getY() <= brick.getY() + brick.getHeight())))) {
+				brickList.remove(brick);
+				if(ball.getX() == brick.getX() + brick.getWidth() || ball.getX() + ball.getWidth() == brick.getX()) {
+					ball.setXSpeed(-ball.getXSpeed());
+				} else {
+					ball.setYSpeed(-ball.getYSpeed());
+				}
+
 			}
-			if(leftPaddle.getY() >=560-leftPaddle.getHeight()) {
-				leftPaddle.setY(560-leftPaddle.getHeight());
+		}
+
+		
+		//see if the paddle hits the top or bottom wall 
+		if(!(leftPaddle.getY()>=52 && leftPaddle.getY()<= 508 - leftPaddle.getHeight())){
+			if(leftPaddle.getY() <=52) {
+				leftPaddle.setY(52);
+			}
+			if(leftPaddle.getY() >=508-leftPaddle.getHeight()) {
+				leftPaddle.setY(508-leftPaddle.getHeight());
 			}
 			//restart();
 			
 		}
 		//see if the paddle hits left or right wall
-		if(!(leftPaddle.getX()>=0 && leftPaddle.getX()<=780-leftPaddle.getWidth())){
-			if(leftPaddle.getX()<= 0) {
+		if(!(leftPaddle.getX()>=92 && leftPaddle.getX()<=688-leftPaddle.getWidth())){
+			if(leftPaddle.getX()<= 92) {
 				
-				leftPaddle.setX(0);
+				leftPaddle.setX(92);
 			}
-			if(leftPaddle.getX() >= 780-leftPaddle.getWidth()) {
-				leftPaddle.setX(780-leftPaddle.getWidth());
+			if(leftPaddle.getX() >= 688-leftPaddle.getWidth()) {
+				leftPaddle.setX(688 -leftPaddle.getWidth());
 				
 				
 			}
@@ -112,13 +170,13 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 		}
 		leftPaddle.setSpeed(speed);
 		//see if the ball hits the top or bottom wall 
-		if(!(ball.getY()>=10 && ball.getY()<= 550)){
+		if(!(ball.getY()>=0 && ball.getY()<= 550)){
 			ball.setYSpeed(-ball.getYSpeed());
 			//restart();
 			
 		}
 	//see if the ball hits the right side
-		if((ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()) && (ball.getX() > leftPaddle.getX()) && (ball.getY() >= leftPaddle.getY()) && (ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()))
+		if((ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()) && (ball.getX() > leftPaddle.getX()) && (ball.getY() >= leftPaddle.getY()) && (ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight() - 2))
 		{
 			if(ball.getXSpeed() < 0) {
 				ball.setXSpeed(-ball.getXSpeed());
@@ -126,9 +184,10 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 			else {
 				ball.setX(ball.getX() + ball.getWidth());
 			}
+			
 		}
 		//see if the ball hits the left side
-		if ((ball.getX()+ ball.getWidth() >= leftPaddle.getX()) && (ball.getX() < leftPaddle.getX() + leftPaddle.getWidth()) && (ball.getY() >= leftPaddle.getY()) && (ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()))
+		if ((ball.getX()+ ball.getWidth() >= leftPaddle.getX()) && (ball.getX() < leftPaddle.getX() + leftPaddle.getWidth()) && (ball.getY() >= leftPaddle.getY()) && (ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight() - 2))
 	        {
 			if(ball.getXSpeed() > 0) {
 				ball.setXSpeed(-ball.getXSpeed());
@@ -138,20 +197,33 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 				ball.setX(ball.getX() - ball.getWidth());
 
 			}
-			
+		
+
 	        }
-		//see if ball hits bottom of paddle
-		if((ball.getY()+ ball.getHeight() >= leftPaddle.getY()) && (ball.getY() < leftPaddle.getY() + leftPaddle.getHeight()) && (ball.getX() >= leftPaddle.getX()) && (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()))
+		//see if ball hits top of paddle
+		if((ball.getY()+ ball.getHeight() >= leftPaddle.getY()) && (ball.getY() < leftPaddle.getY() + leftPaddle.getHeight()) && (ball.getX() >= leftPaddle.getX()) && (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()-2))
 		{
-				
+			if(ball.getYSpeed() < 0) {
+				ball.setY(ball.getY() - ball.getHeight() );	
+
+			}
+			else {
 				ball.setYSpeed(-ball.getYSpeed());
-				ball.setY(ball.getY() - ball.getHeight());	
+
+			}
 		}
-		//see if ball hits top
-		if ((ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()) && (ball.getY() > leftPaddle.getY()) && (ball.getX() >= leftPaddle.getX()) && (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()))
+		//see if ball hits bottom of paddle
+		if ((ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()) && (ball.getY() > leftPaddle.getY()) && (ball.getX() >= leftPaddle.getX()) && (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth()-2))
 	        {
-				ball.setYSpeed(-ball.getYSpeed());
-				ball.setY(leftPaddle.getY() + leftPaddle.getHeight() + ball.getHeight() + 5);	
+				if(ball.getYSpeed() > 0) {
+					ball.setY(ball.getY() + ball.getHeight());
+
+				}
+				else {
+					ball.setYSpeed(-ball.getYSpeed());
+
+				}
+				//ball.setY(leftPaddle.getY() + leftPaddle.getHeight() + ball.getHeight());	
 	        }
 		
 		//see if the paddles need to be moved
