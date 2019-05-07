@@ -3,6 +3,7 @@ import java.awt.Graphics;
 public class Brick extends Block
 {
 	private int health;
+	
 	public Brick() {
 		super(20,20);
 		setHealth(1);
@@ -33,9 +34,12 @@ public class Brick extends Block
 		checkIfDead();
 	}
 	public boolean checkIfDead() {
-		if(health <= 0)
+		if(health <= 0) {
 			return true;
-		return false;
+		} else {
+			super.setColor(new Color(193,193,193));
+			return false;
+		}
 	}
 	public int getHealth() {
 		return health;
