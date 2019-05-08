@@ -122,7 +122,7 @@ public class Breakout extends Canvas implements KeyListener, Runnable
 			}
 			
 		}
-		if(brickList.size()<=120) {
+		if(brickList.size()<=0) {
 			restart();
 		}
 		ArrayList<Brick> remove = new ArrayList<Brick>();
@@ -282,7 +282,7 @@ public class Breakout extends Canvas implements KeyListener, Runnable
    	{
    		while(true)
    		{
-   		   Thread.currentThread().sleep(2);
+   		   Thread.currentThread().sleep(6);
             repaint();
          }
       }catch(Exception e)
