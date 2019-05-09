@@ -2,30 +2,27 @@
 //www.apluscompsci.com
 //Name -
 
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Canvas;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
-import static java.lang.Character.*;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class OuterSpace extends Canvas implements KeyListener, Runnable
 {
 	private Ship ship;
 	private Alien alienOne;
 	private Alien alienTwo;
-	private Ammo ammo;
 	private boolean shot;
-	/* uncomment once you are ready for this part
-	 *
-   private AlienHorde horde;
+	private boolean notDead = true;
+	private boolean notDead2 = true;
+	private AlienHorde horde;
 	private Bullets shots;
-	*/
+	private boolean canShoot = true;
 
 	private boolean[] keys;
 	private BufferedImage back;
@@ -35,10 +32,9 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		setBackground(Color.black);
 		shot = false;
 		keys = new boolean[5];
-		ship = new Ship(50,50,50,50,5);
-		alienOne = new Alien(300,50,50,50,2);
-		alienTwo = new Alien(400,50,50,50,2);
-		ammo = new Ammo();
+		ship = new Ship(375,500,50,50,5);
+		horde = new AlienHorde(21);
+		shots = new Bullets();
 
 		//instantiate other instance variables
 		//Ship, Alien
@@ -72,16 +68,11 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		graphToBack.setColor(Color.BLACK);
 		graphToBack.fillRect(0,0,800,600);
 		ship.draw(graphToBack);
-		alienOne.draw(graphToBack);
-		alienTwo.draw(graphToBack);
-		if(shot) {
-			ammo.draw(graphToBack);
-			ammo.move("UP");
-			if(ammo.getX() >= alienOne.getX()&& ammo.getX()<= alienOne.getX()-alienOne.getWidth()
-					&& ammo.getY()<= alienOne.getY()) {
-				shot = false;
-			}
-		}
+		horde.removeDeadOnes(shots);
+		horde.drawEmAll(graphToBack);
+		shots.drawEmAll(graphToBack);
+		shots.moveEmAll();
+		shots.cleanEmUp();
 		if(keys[0] == true)
 		{
 			ship.move("LEFT");
@@ -100,8 +91,19 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		}
 		if(keys[4] == true)
 		{
-			ammo = new Ammo(ship.getX()+20,ship.getY(),3);
-			shot = true;
+			
+			if(canShoot)
+			{
+				canShoot = false;
+				shots.add(new Ammo(ship.getX()+20,ship.getY(),3)); 
+				Timer timer = new Timer();
+				timer.schedule(new TimerTask() {
+					public void run() {
+						canShoot = true;
+						timer.cancel();
+					}
+				},500);
+			}
 		}
 		
 		//add code to move Ship, Alien, etc.
