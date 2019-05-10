@@ -15,11 +15,7 @@ import java.util.TimerTask;
 public class OuterSpace extends Canvas implements KeyListener, Runnable
 {
 	private Ship ship;
-	private Alien alienOne;
-	private Alien alienTwo;
 	private boolean shot;
-	private boolean notDead = true;
-	private boolean notDead2 = true;
 	private AlienHorde horde;
 	private Bullets shots;
 	private boolean canShoot = true;
@@ -67,12 +63,16 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		graphToBack.drawString("StarFighter ", 25, 50 );
 		graphToBack.setColor(Color.BLACK);
 		graphToBack.fillRect(0,0,800,600);
+		if(horde.size() <= 0) {
+			
+		}
 		ship.draw(graphToBack);
 		horde.removeDeadOnes(shots);
 		horde.drawEmAll(graphToBack);
 		shots.drawEmAll(graphToBack);
 		shots.moveEmAll();
 		shots.cleanEmUp();
+		horde.moveEmAll();
 		if(keys[0] == true)
 		{
 			ship.move("LEFT");
@@ -98,6 +98,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 				shots.add(new Ammo(ship.getX()+20,ship.getY(),3)); 
 				Timer timer = new Timer();
 				timer.schedule(new TimerTask() {
+					@Override
 					public void run() {
 						canShoot = true;
 						timer.cancel();
