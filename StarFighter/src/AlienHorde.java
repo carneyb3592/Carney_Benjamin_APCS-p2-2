@@ -106,7 +106,23 @@ public class AlienHorde {
 			}
 		}
 	}
-
+	public boolean collides(int x, int y,int xW, int yH) {
+		for(Alien a : aliens) {
+			if (((x >= a.getX() && x <= a.getX() + a.getWidth())
+			&& y+10 <= a.getY() + a.getHeight() && y+10 >= a.getY())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public boolean hitsBottom(int height) {
+		for(Alien a: aliens) {
+			if (a.getY()+a.getHeight() >= height) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public void removeDeadOnes(Bullets bullet) {
 		List<Alien> dead = new ArrayList<Alien>();
 		List<Ammo> toKill = new ArrayList<Ammo>();

@@ -4,6 +4,7 @@
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
@@ -19,17 +20,18 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 	private AlienHorde horde;
 	private Bullets shots;
 	private boolean canShoot = true;
-
+	private boolean doesCollide = false;
 	private boolean[] keys;
 	private BufferedImage back;
+	private boolean hitsBottom = false;
 
 	public OuterSpace()
 	{
 		setBackground(Color.black);
 		shot = false;
 		keys = new boolean[5];
-		ship = new Ship(375,500,50,50,5);
-		horde = new AlienHorde(21);
+		ship = new Ship(375,500,50,50,2);
+		horde = new AlienHorde(32);
 		shots = new Bullets();
 
 		//instantiate other instance variables
@@ -47,6 +49,7 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 
 	public void paint( Graphics window )
 	{
+		
 		//set up the double buffering to make the game animation nice and smooth
 		Graphics2D twoDGraph = (Graphics2D)window;
 
@@ -58,14 +61,28 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		//create a graphics reference to the back ground image
 		//we will draw all changes on the background image
 		Graphics graphToBack = back.createGraphics();
-
+		if(horde.size() <= 0) {
+			graphToBack.setColor(Color.GREEN);
+			graphToBack.setFont(new Font("Serif",Font.BOLD,30));
+			graphToBack.drawString("You Win!", 350, 300);
+			twoDGraph.drawImage(back, null, 0, 0);
+			
+			return;
+		}
+		if(doesCollide || hitsBottom) {
+				graphToBack.setColor(Color.RED);
+				graphToBack.setFont(new Font("Serif",Font.BOLD,30));
+				graphToBack.drawString("You Lost.", 320, 300);
+				twoDGraph.drawImage(back, null, 0, 0);
+				
+				return;
+		}
 		graphToBack.setColor(Color.BLUE);
 		graphToBack.drawString("StarFighter ", 25, 50 );
 		graphToBack.setColor(Color.BLACK);
 		graphToBack.fillRect(0,0,800,600);
-		if(horde.size() <= 0) {
-			
-		}
+		
+		
 		ship.draw(graphToBack);
 		horde.removeDeadOnes(shots);
 		horde.drawEmAll(graphToBack);
@@ -73,6 +90,19 @@ public class OuterSpace extends Canvas implements KeyListener, Runnable
 		shots.moveEmAll();
 		shots.cleanEmUp();
 		horde.moveEmAll();
+		if(horde.collides(ship.getX(),ship.getY(),ship.getX()+ship.getWidth(),ship.getY()+ship.getHeight())) {
+			doesCollide = true;
+		}
+		if(horde.hitsBottom(this.getHeight()))
+			hitsBottom = true;
+		if(ship.getX()<= 0)
+			ship.setX(0);
+		if(ship.getX()+ship.getWidth()>= this.getWidth())
+			ship.setX(this.getWidth()-ship.getWidth());
+		if(ship.getY()<= 0)
+			ship.setY(0);
+		if(ship.getY()+ship.getHeight()>= this.getHeight())
+			ship.setY(this.getHeight()-ship.getHeight());
 		if(keys[0] == true)
 		{
 			ship.move("LEFT");
