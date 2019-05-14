@@ -104,12 +104,19 @@ public class AlienHorde {
 				moveR = 0;
 				moveD2++;
 			}
-		}
-	}
-	public boolean collides(int x, int y,int xW, int yH) {
+		 }
+	} 
+	public boolean collides(int x, int y,int xW, int yH) { 
+		y=y+10;
+		x=x+15;
+		xW-=15;
+		yH-=15;
 		for(Alien a : aliens) {
-			if (((x >= a.getX() && x <= a.getX() + a.getWidth())
-			&& y+10 <= a.getY() + a.getHeight() && y+10 >= a.getY())) {
+			if((yH >= a.getY()) && (y < a.getY() + a.getHeight()) && (x >= a.getX()) && (x <= a.getX() + a.getWidth()) || 
+					(x <= a.getX() + a.getWidth()) && ( x > a.getX()) && (y >= a.getY()) && (y <= a.getY() + a.getHeight() )||
+					(xW >= a.getX()) && (x < a.getX()  + a.getWidth()) && (y >= a.getY()) && (y <= a.getY() + a.getHeight() )||
+					(y <= a.getY() + a.getHeight() ) && (y) > a.getY() && (x >= a.getX()) && (x <= a.getX() + a.getWidth()))
+			{
 				return true;
 			}
 		}
