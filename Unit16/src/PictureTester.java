@@ -133,6 +133,16 @@ public class PictureTester
 	    beach.keepOnlyGreen();
 	    beach.explore();
   }
+  public static void testEncodeAndDecode() {
+	  Picture tester = new Picture("crybytes-apple_icon.jpg");
+	  Picture msg = new Picture("msg.jpg");
+	  tester.explore();
+	  tester.encode(msg);
+	  tester.explore();
+	  tester.decode();
+	  tester.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -141,6 +151,7 @@ public class PictureTester
     // and comment out the ones you don't want
     // to run
     //testZeroBlue();
+	  testEncodeAndDecode();
    // testKeepOnlyBlue();
    // testKeepOnlyRed();
    // testKeepOnlyGreen();
