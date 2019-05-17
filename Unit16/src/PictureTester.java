@@ -134,13 +134,14 @@ public class PictureTester
 	    beach.explore();
   }
   public static void testEncodeAndDecode() {
-	  Picture tester = new Picture("crybytes-apple_icon.jpg");
+	  Picture beach = new Picture("beach.jpg");
 	  Picture msg = new Picture("msg.jpg");
-	  tester.explore();
-	  tester.encode(msg);
-	  tester.explore();
-	  tester.decode();
-	  tester.explore();
+	  beach.explore();
+	  msg.explore();
+	  beach.encode(msg);
+	  beach.explore();
+	  beach = beach.decode();
+	  beach.explore();
   }
   
   /** Main method for testing.  Every class can have a main
