@@ -400,20 +400,38 @@ public class Picture extends SimplePicture {
 		Pixel[][] currPixels = this.getPixels2D();
 		Pixel currPixel = null;
 		Pixel messagePixel = null;
+		int redLast;
+		int blueLast;
 		int count = 0;
 		for (int row = 0; row < this.getHeight(); row++) {
 			for (int col = 0; col < this.getWidth(); col++) {
 				// if the current pixel red is odd make it even
 				currPixel = currPixels[row][col];
-				if (currPixel.getBlue()%10%10 != currPixel.getRed()%10%10) {
-					int average = (currPixel.getBlue()%10%10 + currPixel.getRed()%10%10)/2;
-					currPixel.setBlue(currPixel.getBlue()-(currPixel.getBlue()%10%10-average));
-					currPixel.setRed(currPixel.getRed()-(currPixel.getRed()%10%10-average));
-					
+				redLast = currPixel.getRed()%10%10;
+				blueLast = currPixel.getBlue()%10%10;
+				
+				if (blueLast != redLast) {
+					int average = (int) Math.sqrt(((Math.pow(blueLast, 2) + Math.pow(redLast, 2))/2));
+					if(currPixel.getRed()-(blueLast-average) >= 255) {
+						currPixel.setRed(255);
+						if(currPixel.getBlue()%10%10 != 5) {
+							currPixel.setBlue(currPixel.getBlue() -(redLast-5));
+						}
+					}
+					if(currPixel.getBlue()-(blueLast-average) >= 255) {
+						currPixel.setBlue(255);
+						if(currPixel.getRed()%10%10 != 5) {
+							currPixel.setRed(currPixel.getRed() -(redLast-5));
+						}
+					}
+					else{
+					currPixel.setBlue(currPixel.getBlue()-(blueLast-average));
+					currPixel.setRed(currPixel.getRed()-(redLast-average));
+				}
 				}
 				messagePixel = messagePixels[row][col];
-				if (messagePixel.colorDistance(Color.BLACK) < 50) {
-					currPixel.setBlue(currPixel.getBlue() + 1);
+				if (Math.abs(messagePixel.colorDistance(Color.BLACK)) < 100) {
+					currPixel.setBlue(currPixel.getBlue() - 1);
 					count++;
 				}
 			}
