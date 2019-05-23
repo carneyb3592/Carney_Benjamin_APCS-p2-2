@@ -412,26 +412,29 @@ public class Picture extends SimplePicture {
 				
 				if (blueLast != redLast) {
 					int average = (int) Math.sqrt(((Math.pow(blueLast, 2) + Math.pow(redLast, 2))/2));
-					if(currPixel.getRed()-(blueLast-average) >= 255) {
-						currPixel.setRed(255);
-						if(currPixel.getBlue()%10%10 != 5) {
-							currPixel.setBlue(currPixel.getBlue() -(redLast-5));
-						}
-					}
-					if(currPixel.getBlue()-(blueLast-average) >= 255) {
-						currPixel.setBlue(255);
-						if(currPixel.getRed()%10%10 != 5) {
-							currPixel.setRed(currPixel.getRed() -(redLast-5));
-						}
-					}
-					else{
 					currPixel.setBlue(currPixel.getBlue()-(blueLast-average));
 					currPixel.setRed(currPixel.getRed()-(redLast-average));
+					if(currPixel.getRed() == 255) {
+						while(currPixel.getBlue()%10%10 != 5) {
+							currPixel.setBlue(currPixel.getBlue()-1);
+						}
+					}
+					if(currPixel.getBlue() == 255) {
+						while(currPixel.getRed()%10%10 != 5) {
+							currPixel.setRed(currPixel.getRed()-1);
+						}
+					}
 				}
-				}
+				
 				messagePixel = messagePixels[row][col];
 				if (Math.abs(messagePixel.colorDistance(Color.BLACK)) < 100) {
-					currPixel.setBlue(currPixel.getBlue() - 1);
+					if(currPixel.getBlue() == 255) {
+						currPixel.setBlue(currPixel.getBlue() - 1);
+
+					}
+					else
+						currPixel.setBlue(currPixel.getBlue() + 1);
+
 					count++;
 				}
 			}
